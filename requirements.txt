@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+websockets
+pydantic-settings
+elevenlabs
+google-generativeai
+pyaudio
+
+SpeechRecognition
+openai-whisper
+python-dotenv
+numpy
+sounddevice
+soundfile
+asyncio
+pydantic
+loguru

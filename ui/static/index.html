@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVAHAAN Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="siri-container">
+        <!-- Floating Status (Top) -->
+        <div class="status-pill" id="stateIndicator">OFFLINE</div>
+
+        <!-- Main Orb Container (Center) -->
+        <div class="orb-wrapper">
+            <div id="siriOrb" class="orb offline"></div>
+        </div>
+
+        <!-- Transcription & Output (Below Orb) -->
+        <div class="transcript-wrapper">
+            <div id="transcriptText" class="user-text">Awaiting input...</div>
+            <div id="responseText" class="bot-text"></div>
+        </div>
+    </div>
+
+    <!-- Hidden / Subtle Logs (Bottom Corner) -->
+    <div class="debug-overlay">
+        <div class="metrics">
+            <span>STT: <span id="sttLatency">0.00s</span></span> | 
+            <span>RSP: <span id="totalLatency">0.00s</span></span>
+        </div>
+        <div class="logs" id="logContainer"></div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
