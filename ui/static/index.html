@@ -3,32 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVAHAAN Dashboard</title>
+    <title>AVAHAAN Voice Agent</title>
     <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.js"></script>
 </head>
 <body>
     <div class="siri-container">
-        <!-- Floating Status (Top) -->
-        <div class="status-pill" id="stateIndicator">OFFLINE</div>
-
-        <!-- Main Orb Container (Center) -->
-        <div class="orb-wrapper">
-            <div id="siriOrb" class="orb offline"></div>
+        <!-- Orb Container (Top Center) -->
+        <div class="orb-section">
+            <div class="orb-wrapper">
+                <div id="siriOrb" class="orb listening"></div>
+            </div>
+            <div class="status-label" id="statusLabel">Connecting...</div>
         </div>
 
-        <!-- Transcription & Output (Below Orb) -->
-        <div class="transcript-wrapper">
-            <div id="transcriptText" class="user-text">Awaiting input...</div>
-            <div id="responseText" class="bot-text"></div>
+        <!-- Live Conversation Transcript -->
+        <div class="transcript-section" id="transcriptSection">
+            <div class="transcript-list" id="transcriptList">
+                <!-- Transcript entries will be appended here -->
+            </div>
         </div>
     </div>
 
-    <!-- Hidden / Subtle Logs (Bottom Corner) -->
+    <!-- Debug logs (Bottom Corner) -->
     <div class="debug-overlay">
-        <div class="metrics">
-            <span>STT: <span id="sttLatency">0.00s</span></span> | 
-            <span>RSP: <span id="totalLatency">0.00s</span></span>
-        </div>
         <div class="logs" id="logContainer"></div>
     </div>
 

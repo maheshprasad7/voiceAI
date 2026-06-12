@@ -1,8 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
-body {
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     background-color: #000;
     color: #fff;
     font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -18,33 +22,24 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-/* Status Pill */
-.status-pill {
-    position: absolute;
-    top: 40px;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.7);
-    transition: all 0.3s ease;
+/* ── Orb Section (Top) ── */
+.orb-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    flex-shrink: 0;
 }
 
-/* Orb Wrapper */
 .orb-wrapper {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 180px;
+    height: 180px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,8 +47,8 @@ body {
 
 /* Base Orb */
 .orb {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     background: radial-gradient(circle at 30% 30%, #4a90e2, #9013fe);
     box-shadow: 0 0 50px rgba(74, 144, 226, 0.5), 0 0 100px rgba(144, 19, 254, 0.5);
@@ -69,22 +64,16 @@ body {
     opacity: 0.3;
 }
 
-.orb.idle {
-    background: radial-gradient(circle at 30% 30%, #2a5298, #1e3c72);
-    box-shadow: 0 0 40px rgba(42, 82, 152, 0.3);
-    animation: breathe 4s infinite ease-in-out;
+.orb.connecting {
+    background: radial-gradient(circle at 30% 30%, #f5af19, #f12711);
+    box-shadow: 0 0 40px rgba(245, 175, 25, 0.4);
+    animation: breathe 2s infinite ease-in-out;
 }
 
 .orb.listening {
     background: radial-gradient(circle at 30% 30%, #00c6ff, #0072ff);
     box-shadow: 0 0 60px rgba(0, 198, 255, 0.6), 0 0 120px rgba(0, 114, 255, 0.4);
     animation: pulse 1.5s infinite alternate ease-in-out;
-}
-
-.orb.transcribing {
-    background: radial-gradient(circle at 50% 50%, #f12711, #f5af19);
-    box-shadow: 0 0 50px rgba(245, 175, 25, 0.5);
-    animation: spin 1s linear infinite;
 }
 
 .orb.thinking {
@@ -99,61 +88,104 @@ body {
     animation: speak 0.3s infinite alternate ease-in-out;
 }
 
-/* Text Container */
-.transcript-wrapper {
-    position: absolute;
-    bottom: 15%;
-    width: 80%;
-    text-align: center;
-    min-height: 100px;
+/* Status Label */
+.status-label {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color 0.3s ease;
+}
+
+/* ── Transcript Section ── */
+.transcript-section {
+    flex: 1;
+    width: 100%;
+    max-width: 700px;
+    overflow-y: auto;
+    padding: 10px 24px 80px 24px;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 90%, transparent 100%);
+}
+
+.transcript-section::-webkit-scrollbar {
+    width: 4px;
+}
+
+.transcript-section::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.transcript-list {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+    gap: 12px;
 }
 
-.user-text {
-    font-size: 24px;
+/* Transcript Entries */
+.transcript-entry {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.transcript-entry .speaker {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.transcript-entry.user .speaker {
+    color: rgba(0, 198, 255, 0.7);
+}
+
+.transcript-entry.agent .speaker {
+    color: rgba(255, 65, 108, 0.7);
+}
+
+.transcript-entry .text {
+    font-size: 16px;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 10px;
-    min-height: 30px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+    padding-left: 2px;
 }
 
-.bot-text {
-    font-size: 18px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.5);
+.transcript-entry.agent .text {
+    color: rgba(255, 255, 255, 0.65);
     font-style: italic;
-    min-height: 25px;
 }
 
-/* Debug Overlay */
+/* Partial (in-progress) transcript styling */
+.transcript-entry .text.partial {
+    opacity: 0.5;
+}
+
+/* ── Debug Overlay ── */
 .debug-overlay {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    width: 250px;
+    width: 300px;
     font-family: monospace;
     font-size: 10px;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.25);
     pointer-events: none;
 }
 
-.debug-overlay .metrics {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .debug-overlay .logs {
-    height: 50px;
+    height: 60px;
     overflow-y: hidden;
     display: flex;
     flex-direction: column-reverse;
 }
 
-/* Animations */
+/* ── Animations ── */
 @keyframes breathe {
     0%, 100% { transform: scale(1); filter: blur(10px); }
     50% { transform: scale(1.1); filter: blur(15px); }
@@ -172,4 +204,15 @@ body {
 @keyframes speak {
     0% { transform: scale(1.1) scaleX(1); filter: blur(10px); }
     100% { transform: scale(1.4) scaleX(1.1); filter: blur(25px); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
