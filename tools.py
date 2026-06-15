@@ -1,7 +1,7 @@
 import logging
 from livekit.agents import function_tool, RunContext
 import requests
-from langchain_community.tools import DuckDuckGoSearchRun
+from ddgs import DDGS
 import os
 import smtplib
 from email.mime.multipart import MIMEMultipart  
@@ -33,12 +33,26 @@ async def search_web(
     context: RunContext,  # type: ignore
     query: str) -> str:
     """
-    Search the web using DuckDuckGo.
+    Search the web for any question or topic using DuckDuckGo. 
+    Use this tool whenever the user asks about current events, facts, people, 
+    sports results, history, or anything you are unsure about.
     """
     try:
-        results = DuckDuckGoSearchRun().run(tool_input=query)
-        logging.info(f"Search results for '{query}': {results}")
-        return results
+        with DDGS() as ddgs:
+            results = list(ddgs.text(query, max_results=3))
+        if not results:
+            return f"No results found for '{query}'."
+        
+        output = []
+        for r in results:
+            title = r.get("title", "")
+            body = r.get("body", "")
+            href = r.get("href", "")
+            output.append(f"{title}: {body} ({href})")
+        
+        answer = "\n".join(output)
+        logging.info(f"Search results for '{query}': {answer}")
+        return answer
     except Exception as e:
         logging.error(f"Error searching the web for '{query}': {e}")
         return f"An error occurred while searching the web for '{query}'."    

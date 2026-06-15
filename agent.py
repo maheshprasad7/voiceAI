@@ -17,7 +17,7 @@ class Assistant(Agent):
             instructions=AGENT_INSTRUCTION,
             llm=google.beta.realtime.RealtimeModel(
                 voice="Aoede",
-                temperature=1.2,
+                temperature=0.8,
             ),
             tools=[get_weather, search_web, send_email],
         )
