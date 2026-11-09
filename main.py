@@ -14,7 +14,7 @@ logger.add("logs/avahaan.log", rotation="10 MB")
 
 from ui.dashboard import app as fastapi_app
 from livekit import agents
-from agent import entrypoint
+from agent import server, entrypoint
 
 def run_fastapi():
     """Runs the FastAPI server for the dashboard."""
@@ -30,7 +30,7 @@ def main():
     
     # Start the LiveKit agent
     logger.info("Starting LiveKit Agent...")
-    agents.cli.run_app(agents.WorkerOptions(entrypoint_fnc=entrypoint))
+    agents.cli.run_app(server)
 
 if __name__ == "__main__":
     main()
